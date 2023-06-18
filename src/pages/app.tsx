@@ -15,10 +15,10 @@ export default function App() {
             )}
             <div
                 className={`fixed z-40 border-r-2 bg-zinc-800 border-zinc-700 top-0 bottom-0 duration-200 transition-all ${
-                    expanded ? "sm:max-w-[280px] sm:w-full w-280px" : "left-0 w-[60px] sm:w-[280px]"
+                    expanded ? "sm:max-w-[280px] w-[280px]" : "left-0 w-[72px] sm:w-[280px]"
                 }`}
             >
-                <div className="flex justify-between items-center p-3 mb-1 bg-zinc-900">
+                <div className="flex justify-between items-center p-3 h-16 mb-1 bg-zinc-900">
                     {expanded ? (
                         <>
                             <h4 className="text-gray-100  text-lg">Conversation</h4>
