@@ -1,4 +1,5 @@
-import { FormInput } from "../components/formInput"
+import { FormInput } from "../components/FormInput"
+import { Link } from "react-router-dom"
 
 export default function Login() {
     return (
@@ -9,7 +10,10 @@ export default function Login() {
                 <button className="btn btn-primary capitalize h-16 w-full">Login</button>
             </form>
             <p className="text-center text-gray-200 font-semibold  text-xs mt-3">
-                Do not have an account? <span className="underline">Register</span>
+                Do not have an account?{" "}
+                <Link to="/register" className="underline">
+                    Register
+                </Link>
             </p>
         </>
     )

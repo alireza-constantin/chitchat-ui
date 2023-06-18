@@ -1,4 +1,5 @@
-import { FormInput } from "../components/formInput"
+import { FormInput } from "../components/FormInput"
+import { Link } from "react-router-dom"
 
 export default function Register() {
     return (
@@ -15,7 +16,10 @@ export default function Register() {
                 </button>
             </form>
             <p className="text-center text-gray-200 font-semibold  text-xs mt-3">
-                Already have an account? <span className="underline">Login</span>
+                Already have an account?{" "}
+                <Link to="/login" className="underline">
+                    Login
+                </Link>
             </p>
         </>
     )
