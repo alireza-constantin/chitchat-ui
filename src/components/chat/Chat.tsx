@@ -1,8 +1,10 @@
 // import { useParams } from "react-router-dom"
+import axios from "axios"
 import { ProfilePic } from "../ProfilePic"
+import { useEffect } from "react"
 
 export default function Chat() {
-    // const { chatId } = useParams()
+    
 
     return (
         <div className="w-full max-h-screen overflow-hidden">
