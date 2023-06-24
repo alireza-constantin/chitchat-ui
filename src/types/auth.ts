@@ -5,4 +5,12 @@ export const loginSchema = z.object({
     password: z.string().min(4,{  message: "password can't be less than 4 character" }),
 })
 
-export type loginType = z.infer<typeof loginSchema>
+export const registerSchema = z.object({
+    email: z.string().email(),
+    firstName: z.string().min(2, { message: "first name can't be less than 4 character" }),
+    lastName: z.string().min(2, { message: "last name can't be less than 4 character" }),
+    password: z.string().min(4, { message: "password can't be less than 4 character" }),
+})
+
+export type LoginType = z.infer<typeof loginSchema>
+export type RegisterType = z.infer<typeof registerSchema>

@@ -2,7 +2,7 @@ import { FormInput } from "../components/FormInput"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginType, loginSchema } from "@/types"
+import { LoginType, loginSchema } from "@/types"
 import { login } from "@/api/auth"
 import { AxiosError } from "axios"
 import { toast } from "react-hot-toast"
@@ -19,12 +19,12 @@ export default function Login() {
         register,
         formState: { errors },
         handleSubmit,
-    } = useForm<loginType>({
+    } = useForm<LoginType>({
         resolver: zodResolver(loginSchema),
     })
 
 
-    const submitHandler: SubmitHandler<loginType> = async ({ email, password }) => {
+    const submitHandler: SubmitHandler<LoginType> = async ({ email, password }) => {
         try {
             await login({email, password})
             navigate('/')
