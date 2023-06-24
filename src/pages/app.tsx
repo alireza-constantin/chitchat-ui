@@ -7,9 +7,11 @@ export default function App() {
     console.log(user);
     
     return (
-        <div  className="flex w-full">
-            <Sidebar />
-            <Outlet />
-        </div>
+        <>
+            <div className="flex w-full">
+                <Sidebar />
+                <Outlet />
+            </div>
+        </>
     )
 }

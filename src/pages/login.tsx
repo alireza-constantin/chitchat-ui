@@ -1,36 +1,41 @@
 import { FormInput } from "../components/FormInput"
-import { Link } from "react-router-dom"
-import axios from "axios"
-import z from "zod"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { loginType, loginSchema } from "@/types"
+import { login } from "@/api/auth"
+import { AxiosError } from "axios"
+import { toast } from "react-hot-toast"
+import { handleError } from "@/utils/handleResponseError"
+
 
 const fields = ["email", "password"] as const
 
-const registerSchema = z.object({
-    email: z.string().email(),
-    password: z.string(),
-})
-
-type registerType = z.infer<typeof registerSchema>
-
 export default function Login() {
+    const navigate = useNavigate()
+
+
     const {
         register,
-        // formState: { errors },
+        formState: { errors },
         handleSubmit,
-    } = useForm<registerType>({
-        resolver: zodResolver(registerSchema),
+    } = useForm<loginType>({
+        resolver: zodResolver(loginSchema),
     })
 
-    const submitHandler: SubmitHandler<registerType> = async ({ email, password }) => {
-        console.log(email, password)
-        const res = await axios.post(
-            "http://localhost:3000/api/auth/login",
-            { email, password },
-            { withCredentials: true }
-        )
-        console.log(res.data)
+
+    const submitHandler: SubmitHandler<loginType> = async ({ email, password }) => {
+        try {
+            await login({email, password})
+            navigate('/')
+        } catch (error) {
+            if (error instanceof AxiosError){
+                const err = handleError(error)
+                err && toast.error(err.message)
+            } else {
+                console.log(error)
+            }
+        }
     }
 
     return (
@@ -40,9 +45,9 @@ export default function Login() {
                 className="mx-auto pt-32  container px-4 lg:w-3/5"
             >
                 {fields.map((field) => (
-                    <FormInput register={register(field)} label={field} key={field} />
+                    <FormInput register={register(field)} label={field} key={field} error={errors[field]} />
                 ))}
-                <button className="btn btn-primary capitalize h-16 w-full">Login</button>
+                <button type="submit" className="btn btn-primary capitalize h-16 w-full">Login</button>
             </form>
             <p className="text-center text-gray-200 font-semibold  text-xs mt-3">
                 Do not have an account?{" "}

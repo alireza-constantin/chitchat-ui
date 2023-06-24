@@ -8,6 +8,7 @@ import Register from "./pages/register"
 import App from "./pages/app"
 import Chat from "./components/chat/Chat"
 import axios from "axios"
+import { Toaster } from "react-hot-toast"
 
 async function getStatus() {
     const res = await axios.get("http://localhost:3000/api/auth/status", {
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
+        <Toaster />
         <RouterProvider router={router} />
     </React.StrictMode>
 )
