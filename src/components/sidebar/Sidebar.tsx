@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { Profile } from "./Profile"
 import { SquaresPlusIcon, Bars4Icon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
+import Modal from "../modal"
+import CreateConversation from "../createConversation"
 
 const convs = [
     {
@@ -69,7 +71,10 @@ export default function Sidebar() {
                     {expanded ? (
                         <>
                             <h4 className="text-gray-100  text-lg">Conversation</h4>
-                            <SquaresPlusIcon className="w-6 h-6 text-gray-100" />
+                            <SquaresPlusIcon
+                                onClick={() => (document.getElementById('my_modal') as HTMLDialogElement).showModal()}
+                                className="w-6 h-6 text-gray-100 cursor-pointer"
+                            />
                         </>
                     ) : (
                         <button
@@ -95,6 +100,9 @@ export default function Sidebar() {
                         })}
                     </ul>
                 </div>
+                <Modal header="Create a New Conversation" >
+                    <CreateConversation />
+                </Modal>
             </div>
         </>
     )

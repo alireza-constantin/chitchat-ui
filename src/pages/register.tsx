@@ -1,6 +1,6 @@
-import { RegisterType, registerSchema } from "@/types"
+import { type RegisterType, registerSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { type SubmitHandler, useForm } from "react-hook-form"
 import { FormInput } from "../components/FormInput"
 import { Link } from "react-router-dom"
 import { handleError } from "@/utils/handleResponseError"
@@ -8,6 +8,7 @@ import { AxiosError } from "axios"
 import toast from "react-hot-toast"
 import { register as signup } from "@/api/auth"
 import { useNavigate } from "react-router-dom"
+
 
 export default function Register() {
     const navigate = useNavigate()

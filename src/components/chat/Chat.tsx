@@ -1,10 +1,10 @@
 // import { useParams } from "react-router-dom"
-import axios from "axios"
+import { useRouteLoaderData } from "react-router-dom"
 import { ProfilePic } from "../ProfilePic"
-import { useEffect } from "react"
 
 export default function Chat() {
-    
+    const user = useRouteLoaderData('root')
+    console.log('chat page: ', user)
 
     return (
         <div className="w-full max-h-screen overflow-hidden">

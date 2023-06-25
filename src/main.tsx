@@ -7,15 +7,24 @@ import { createBrowserRouter, Navigate, RouterProvider} from "react-router-dom"
 import Register from "./pages/register"
 import App from "./pages/app"
 import Chat from "./components/chat/Chat"
-import axios from "axios"
 import { Toaster } from "react-hot-toast"
 
-async function getStatus() {
-    const res = await axios.get("http://localhost:3000/api/auth/status", {
-        withCredentials: true,
-    })
-    return res
+// import axios from "axios"
+// async function getStatus() {
+//     const res = await axios.get("http://localhost:3000/api/auth/status", {
+//         withCredentials: true,
+//     })
+//     return res.data
+// }
+
+function getUserMock() {
+    return {
+        email: 'jane@doe.com',
+        firstName: 'jane',
+        lastName: 'doe',
+    }
 }
+
 
 
 function ErrorHandling(){
@@ -25,9 +34,10 @@ function ErrorHandling(){
 const router = createBrowserRouter([
     {
         path: "/",
-        loader: getStatus,
+        loader: getUserMock,
         errorElement: <ErrorHandling />,
         element: <App />,
+        id: 'root',
         children: [
             {
                 path: "/:chatId",
