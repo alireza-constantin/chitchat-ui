@@ -16,7 +16,7 @@ export default function Modal({ children, header}: Modal){
                     {children}
                 </div>
             </div>
-            <form method="dialog" className="modal-backdrop">
+            <form method="dialog" className="modal-backdrop bg-black/30">
                 <button>close</button>
             </form>
         </dialog>

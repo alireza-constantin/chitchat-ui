@@ -1,14 +1,17 @@
-import { Outlet } from "react-router-dom";
-import Sidebar from "../components/sidebar/Sidebar";
+import { Navigate, Outlet, useLoaderData, useRouteError } from "react-router-dom";
 
+
+export function HandleAuthError(){
+    return <Navigate to="/login" replace={true} />
+}
 
 export default function App() {
+    const user = useLoaderData()
+
+
     return (
         <>
-            <div className="flex w-full">
-                <Sidebar />
-                <Outlet />
-            </div>
+            {user ? <Outlet /> : <Navigate  to="/login" />}
         </>
     )
 }

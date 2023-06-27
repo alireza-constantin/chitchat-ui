@@ -1,34 +1,13 @@
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
 import { Profile } from "./Profile"
 import { SquaresPlusIcon, Bars4Icon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
 import Modal from "../modal"
 import CreateConversation from "../createConversation"
+import { Conversation } from "@/types"
 
-const convs = [
-    {
-        id: 1,
-        userName: "alec baldwin",
-        lastMessage: "hey alec how are you?",
-    },
-    {
-        id: 2,
-        userName: "mr porter",
-        lastMessage: "hey alec where are y man?",
-    },
-    {
-        id: 3,
-        userName: "eminem",
-        lastMessage: "hey album is ready yet?",
-    },
-    {
-        id: 4,
-        userName: "k dot",
-        lastMessage: "ooo that was fire",
-    },
-]
 
-export default function Sidebar() {
+export default function Sidebar({ conversations }: { conversations: Conversation[]}) {
     const [expanded, setExpanded] = useState(false)
 
     useEffect(() => {
@@ -87,12 +66,12 @@ export default function Sidebar() {
                 </div>
                 <div className="">
                     <ul className="flex flex-col gap-1">
-                        {convs.map(({ lastMessage, userName, id }) => {
+                        {conversations.map(({ id, recipinet,  }) => {
                             return (
                                 <Profile
-                                    key={userName}
-                                    userName={userName}
-                                    lastMessage={lastMessage}
+                                    key={id}
+                                    userName={recipinet.firstName + " " + recipinet.lastName}
+                                    lastMessage='last mesage'
                                     exp={expanded}
                                     id={id}
                                 />
