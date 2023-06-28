@@ -1,7 +1,9 @@
 import { LoaderFunctionArgs, useLoaderData, useRouteLoaderData } from "react-router-dom"
 import { ProfilePic } from "../ProfilePic"
 import axios from "axios"
+import { formatDistance, formatRelative } from "date-fns"
 import { ConversationWithMessages, Recipient } from "@/types"
+import clsx from "clsx"
 
 export async function loader({ params }: LoaderFunctionArgs) {
     const res = await axios.get<ConversationWithMessages>(
@@ -14,13 +16,16 @@ export async function loader({ params }: LoaderFunctionArgs) {
 }
 
 function getMessageAuthor(authorId: number, user1: Recipient, user2: Recipient) {
-    return authorId === user1.id ? user1 : user2
+    return authorId === user1.id
+        ? { name: user1.firstName + " " + user1.lastName, author: true }
+        : { name: user2.firstName + " " + user2.lastName, author: false }
 }
 
 export default function Chat() {
     const data = useLoaderData() as ConversationWithMessages
     const user = useRouteLoaderData("root") as Recipient
 
+    console.log(data.messages)
 
     return (
         <div className="w-full max-h-screen overflow-hidden">
@@ -35,24 +40,34 @@ export default function Chat() {
                     </h5>
                 </div>
                 {/* chat screen */}
-                <div className="flex-1 px-6 flex flex-col-reverse gap-2 py-2 overflow-y-auto no-scrollbar">
+                <div className="flex-1 px-6 flex flex-col-reverse py-2 overflow-y-auto no-scrollbar">
                     {/* just for strict mode -- remove it in production */}
-                    {[...data.messages].reverse().map(({ authorId, id, text }) => {
-                        console.log(text)
-                        return (
-                            <ChatMessage
-                                author={getMessageAuthor(authorId, user, data.recipinet)}
-                                text={text}
-                                key={id}
-                            />
-                        )
-                    })}
+                    {[...data.messages]
+                        .reverse()
+                        .map(({ authorId, id, text, createdAt }, idx, messages) => {
+                            const nextMessage = idx + 1
+                            if (
+                                messages[nextMessage] &&
+                                authorId === messages[nextMessage].authorId
+                            ) {
+                                return <ChatMessage key={id} text={text} date={createdAt} />
+                            }
+
+                            return (
+                                <ChatMessageHeader
+                                    author={getMessageAuthor(authorId, user, data.recipinet)}
+                                    key={id}
+                                >
+                                    <ChatMessage key={id} text={text} date={createdAt} />
+                                </ChatMessageHeader>
+                            )
+                        })}
                 </div>
                 <div className="w-full h-20  p-4 bg-zinc-800">
                     <input
-                        placeholder="Write to Albert Einsten"
+                        placeholder={`Write to ${data.recipinet.firstName} ${data.recipinet.lastName}`}
                         className=" 
-                bg-zinc-900 w-full focus:outline-none text-gray-200 placeholder:text-zinc-500 px-4 py-3 rounded-md"
+                bg-zinc-900 w-full placeholder:capitalize focus:outline-none text-gray-200 placeholder:text-zinc-500 px-4 py-3 rounded-md"
                     />
                 </div>
             </div>
@@ -60,23 +75,51 @@ export default function Chat() {
     )
 }
 
-function ChatMessage({ text, author }: { text: string; author: Recipient }) {
+function ChatMessage({ text, date }: { text: string; date: string }) {
     // console.log("chat message component", author)
+    const formatedDate = formatDistance(new Date(date), new Date(), { addSuffix: true })
 
     return (
-        <div className="flex gap-2 mb-2">
-            <div className=" avatar">
-                <div className="w-8 h-8 rounded-full bg-pink-500"></div>
-            </div>
-            <div>
-                <div className="flex gap-2 items-center">
-                    <p className="text-blue-500 font-medium text-base">{`${author.firstName} ${author.lastName}`}</p>
-                    <time className="text-xs opacity-50">Today at 12:45</time>
+        <div className="text-gray-100 ml-6 chat-bubble chat-bubble-primary mb-1">
+            <div className="text-sm">{text}</div>
+            <p className="sm:text-[10px] text-[8px] pt-[1px]  text-right opacity-50">
+                {formatedDate}
+            </p>
+        </div>
+    )
+}
+
+type ChatMessageHeaderProps = {
+    author: { name: string; author: boolean }
+    children: React.ReactNode
+}
+
+function ChatMessageHeader({ author, children }: ChatMessageHeaderProps) {
+    return (
+        <div>
+            <div className="flex gap-2 items-center mb-2 mt-4">
+                <div className=" avatar">
+                    <div
+                        className={clsx(
+                            "w-8 h-8 rounded-full",
+                            author.author ? "bg-sky-500" : "bg-amber-400"
+                        )}
+                    ></div>
                 </div>
-                <div className="text-sm text-gray-100">
-                    <div>{text}</div>
+                <div>
+                    <div className="flex gap-2 items-center">
+                        <p
+                            className={clsx(
+                                "font-medium text-lg capitalize",
+                                author.author ? "text-sky-400" : "text-amber-400"
+                            )}
+                        >
+                            {author.name}
+                        </p>
+                    </div>
                 </div>
             </div>
+            {children}
         </div>
     )
 }
