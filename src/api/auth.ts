@@ -1,13 +1,13 @@
 import { LoginType, RegisterType } from "@/types/auth"
-import { authApi } from "./config"
+import { api, withCredConf } from "./config"
 
 export const login = async (data: LoginType) => {
-    const res = await authApi.post("/auth/login", data)
+    const res = await api.post("/auth/login", data, withCredConf)
     return res
 }
 
 export const register = async (data: RegisterType) => {
-    const res = await authApi.post("/auth/register", data)
+    const res = await api.post("/auth/register", data, withCredConf)
     return res
 }
 

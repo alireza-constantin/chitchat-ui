@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
-export const authApi = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+
+export const withCredConf: AxiosRequestConfig = {
     withCredentials: true
-})
+}
 
 export const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL
