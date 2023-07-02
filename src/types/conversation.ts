@@ -22,4 +22,9 @@ export type Message = {
     updatedAt: string
 }
 
+export type SendMessage = {
+    conversationId: number,
+    message: string
+}
+
 export type ConversationWithMessages = Conversation & { messages: Message[] }

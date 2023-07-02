@@ -3,7 +3,8 @@ import { ProfilePic } from "../ProfilePic"
 import { ConversationWithMessages, Recipient } from "@/types"
 import ChatMessageHeader from "./ChatMessageHeader"
 import ChatMessage from "./ChatMessageText"
-import { getChatsById } from "@/api/conversation"
+import { getChatsById, sendMessage } from "@/api/conversation"
+import { FormEvent } from "react"
 
 export async function loader({ params }: LoaderFunctionArgs) {
     return getChatsById(params.chatId!)
@@ -16,8 +17,20 @@ function getMessageAuthor(authorId: number, user: Recipient, recipient: Recipien
 }
 
 export default function Chat() {
-    const { messages, recipinet } = useLoaderData() as ConversationWithMessages
+    const { messages, recipinet, ...conversation } = useLoaderData() as ConversationWithMessages
     const user = useRouteLoaderData("root") as Recipient
+
+    async function sendMessageHandler(e: FormEvent<HTMLFormElement>){
+        e.preventDefault()
+        const messageInput = (e.currentTarget.elements.namedItem('message') as HTMLInputElement )
+        try {
+          await sendMessage({ conversationId: conversation.id, message: messageInput.value })  
+        } catch (error) {
+            console.log(error)
+        }
+        messageInput.value = '';
+        // sendMessage({ conversationId: conversation.id, text: })
+    }
 
 
     return (
@@ -50,11 +63,14 @@ export default function Chat() {
                         })}
                 </div>
                 <div className="w-full h-20  p-4 bg-zinc-800">
+                    <form onSubmit={sendMessageHandler}>
                     <input
+                        name="message"
                         placeholder={`Write to ${recipinet.firstName} ${recipinet.lastName}`}
                         className=" 
                 bg-zinc-900 w-full placeholder:capitalize focus:outline-none text-gray-200 placeholder:text-zinc-500 px-4 py-3 rounded-md"
                     />
+                </form>
                 </div>
             </div>
         </div>
