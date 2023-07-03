@@ -12,6 +12,7 @@
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.1.1",
+    "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.30.0",
@@ -19,10 +20,10 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.0",
     "react-hot-toast": "^2.4.1",
+    "react-redux": "^8.1.1",
     "react-router-dom": "^6.13.0",
     "socket.io-client": "^4.7.1",
-    "zod": "^3.21.4",
-    "zustand": "^4.3.8"
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

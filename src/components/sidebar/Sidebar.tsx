@@ -4,33 +4,45 @@ import { SquaresPlusIcon, Bars4Icon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
 import Modal from "../modal"
 import CreateConversation from "../createConversation"
-import { Conversation } from "@/types"
+// import { Conversation } from "@/types"
+import { useAppDispatch } from "@/app/hook"
+import { fetchUserConversations } from "@/app/slices/conversations"
 
 
-export default function Sidebar({ conversations }: { conversations: Conversation[]}) {
+export default function Sidebar() {
     const [expanded, setExpanded] = useState(false)
 
+    const dispatch = useAppDispatch()
+    // const conversation = useAppSelector((state) => state.conversations)
+    // console.log(conversation)
+
     useEffect(() => {
-        const handleResize = () => {
-            const isBigger = window.innerWidth > 640
-            isBigger && setExpanded(true)
-        }
+        dispatch(fetchUserConversations()).unwrap().then((res) => {
+            console.log(res)
+        })
+    }, [dispatch])
 
-        // Initial check on component mount
-        handleResize()
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         const isBigger = window.innerWidth > 640
+    //         isBigger && setExpanded(true)
+    //     }
 
-        // Event listener for window resize
-        window.addEventListener("resize", handleResize)
+    //     // Initial check on component mount
+    //     handleResize()
 
-        // Clean up the event listener on component unmount
-        return () => {
-            window.removeEventListener("resize", handleResize)
-        }
-    }, [])
+    //     // Event listener for window resize
+    //     window.addEventListener("resize", handleResize)
+
+    //     // Clean up the event listener on component unmount
+    //     return () => {
+    //         window.removeEventListener("resize", handleResize)
+    //     }
+    // }, [])
 
     return (
         <>
-            {expanded && (
+            {/* {expanded && (
                 <div
                     onClick={() => setExpanded(false)}
                     className="absolute sm:hidden inset-0 bg-black/40 z-10"
@@ -82,7 +94,8 @@ export default function Sidebar({ conversations }: { conversations: Conversation
                 <Modal header="Create a New Conversation" >
                     <CreateConversation />
                 </Modal>
-            </div>
+            </div> */}
+            <div>Hello conversation</div>
         </>
     )
 }
