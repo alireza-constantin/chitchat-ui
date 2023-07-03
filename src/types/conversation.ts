@@ -11,6 +11,7 @@ export type Conversation = {
     creatorId: number
     recipientId: number
     recipinet: Recipient
+    creator: Recipient
 }
 
 export type Message = {

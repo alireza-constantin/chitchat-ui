@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import converstaionsReducer from './slices/conversations'
+import converstaionsReducer, { conversationsAdapter } from './slices/conversations'
 
 export const store = configureStore({
     reducer: {
@@ -10,3 +10,6 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
+export const conversationsSelector = conversationsAdapter.getSelectors<RootState>(
+    (state) => state.conversations
+)

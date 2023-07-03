@@ -1,53 +1,16 @@
-import { useState, useEffect } from "react"
-import { Profile } from "./Profile"
+import { useState } from "react"
 import { SquaresPlusIcon, Bars4Icon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
 import Modal from "../modal"
 import CreateConversation from "../createConversation"
-// import { Conversation } from "@/types"
-import { useAppDispatch } from "@/app/hook"
-import { fetchUserConversations } from "@/app/slices/conversations"
-
+import { Conversations } from "./Conversations"
 
 export default function Sidebar() {
-    const [expanded, setExpanded] = useState(false)
-
-    const dispatch = useAppDispatch()
-    // const conversation = useAppSelector((state) => state.conversations)
-    // console.log(conversation)
-
-    useEffect(() => {
-        dispatch(fetchUserConversations()).unwrap().then((res) => {
-            console.log(res)
-        })
-    }, [dispatch])
-
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         const isBigger = window.innerWidth > 640
-    //         isBigger && setExpanded(true)
-    //     }
-
-    //     // Initial check on component mount
-    //     handleResize()
-
-    //     // Event listener for window resize
-    //     window.addEventListener("resize", handleResize)
-
-    //     // Clean up the event listener on component unmount
-    //     return () => {
-    //         window.removeEventListener("resize", handleResize)
-    //     }
-    // }, [])
+    const [expanded, setExpanded] = useState(true)
 
     return (
         <>
-            {/* {expanded && (
-                <div
-                    onClick={() => setExpanded(false)}
-                    className="absolute sm:hidden inset-0 bg-black/40 z-10"
-                ></div>
-            )}
+            <Backdrop expanded={expanded} setExpanded={setExpanded} />
             <div
                 className={clsx(
                     "sticky min-h-screen z-20 overflow-y-scroll no-scrollbar border-r-2 bg-zinc-800 border-zinc-700",
@@ -55,47 +18,82 @@ export default function Sidebar() {
                     expanded ? "sm:max-w-[280px] w-[280px]" : "left-0 w-[72px] sm:w-[280px]"
                 )}
             >
-                <div
-                    className="sticky top-0 z-30 border-b-2 border-zinc-700 
-                flex justify-between items-center p-3 h-16  bg-zinc-900"
-                >
-                    {expanded ? (
-                        <>
-                            <h4 className="text-gray-100  text-lg">Conversation</h4>
-                            <SquaresPlusIcon
-                                onClick={() => (document.getElementById('my_modal') as HTMLDialogElement).showModal()}
-                                className="w-6 h-6 text-gray-100 cursor-pointer"
-                            />
-                        </>
-                    ) : (
-                        <button
-                            className="sm:hidden bg-transparent mx-auto"
-                            onClick={() => setExpanded(true)}
-                        >
-                            <Bars4Icon className="text-gray-100 h-6 w-6" />
-                        </button>
-                    )}
-                </div>
-                <div className="">
-                    <ul className="flex flex-col gap-1">
-                        {conversations.map(({ id, recipinet,  }) => {
-                            return (
-                                <Profile
-                                    key={id}
-                                    userName={recipinet.firstName + " " + recipinet.lastName}
-                                    lastMessage='last mesage'
-                                    exp={expanded}
-                                    id={id}
-                                />
-                            )
-                        })}
-                    </ul>
-                </div>
-                <Modal header="Create a New Conversation" >
+                <SidebarButton expanded={expanded} setExpanded={setExpanded} />
+                <Conversations expanded={expanded} />
+
+                <Modal header="Create a New Conversation">
                     <CreateConversation />
                 </Modal>
-            </div> */}
-            <div>Hello conversation</div>
+            </div>
         </>
     )
 }
+
+type SidebarButtonProps = {
+    expanded: boolean
+    setExpanded: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+function SidebarButton({ expanded, setExpanded }: SidebarButtonProps) {
+    return (
+        <div
+            className="sticky top-0 z-30 border-b-2 border-zinc-700 
+                    flex justify-between items-center p-3 h-16  bg-zinc-900"
+        >
+            {expanded ? (
+                <>
+                    <h4 className="text-gray-100  text-lg">Conversation</h4>
+                    <SquaresPlusIcon
+                        onClick={() =>
+                            (document.getElementById("my_modal") as HTMLDialogElement).showModal()
+                        }
+                        className="w-6 h-6 text-gray-100 cursor-pointer"
+                    />
+                </>
+            ) : (
+                <button
+                    className="sm:hidden bg-transparent mx-auto"
+                    onClick={() => setExpanded(true)}
+                >
+                    <Bars4Icon className="text-gray-100 h-6 w-6" />
+                </button>
+            )}
+        </div>
+    )
+}
+
+type BackdropProps = {
+    expanded: boolean
+    setExpanded: React.Dispatch<React.SetStateAction<boolean>>
+}
+function Backdrop({ expanded, setExpanded }: BackdropProps) {
+    return (
+        <>
+            {expanded && (
+                <div
+                    onClick={() => setExpanded(false)}
+                    className="absolute sm:hidden inset-0 bg-black/40 z-10"
+                ></div>
+            )}
+        </>
+    )
+}
+
+// add when going to prod
+// useEffect(() => {
+//     const handleResize = () => {
+//         const isBigger = window.innerWidth > 640
+//         isBigger && setExpanded(true)
+//     }
+
+//     // Initial check on component mount
+//     handleResize()
+
+//     // Event listener for window resize
+//     window.addEventListener("resize", handleResize)
+
+//     // Clean up the event listener on component unmount
+//     return () => {
+//         window.removeEventListener("resize", handleResize)
+//     }
+// }, [])
