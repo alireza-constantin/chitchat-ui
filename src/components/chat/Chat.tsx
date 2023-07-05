@@ -18,14 +18,11 @@ export default function Chat() {
         return <div>something went wrong</div>
     }
 
-    
     const { creator, recipinet, creatorId } = conversation
 
     const recipientFullName = isUserAuthor(user.id, creatorId)
         ? getFullName(recipinet)
         : getFullName(creator)
-
-    console.log(recipientFullName)
 
     // useEffect(() => {
     //     socket.on('connect', () => console.log('connected'))
@@ -37,15 +34,13 @@ export default function Chat() {
     //     return () => {
     //         socket.off('connect')
     //     }
-    // }, [])
+    // }, [])    console.log(recipientFullName)
 
     return (
         <div className="w-full max-h-screen overflow-hidden">
             <div className="flex flex-col justify-between h-full overflow-y-hidden">
-                <ChatHeader
-                    name={recipientFullName}
-                />
-                <ChatMessages conversationId={params.chatId}  />
+                <ChatHeader name={recipientFullName} />
+                <ChatMessages authUserId={user.id} conversationId={params.chatId} />
                 <SendMessageInput conversationId={params.chatId} name={recipientFullName} />
             </div>
         </div>

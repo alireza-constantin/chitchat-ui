@@ -22,6 +22,7 @@ export type Message = {
     id: number
     text: string
     updatedAt: string
+    author: User
 }
 
 export type SendMessage = {
