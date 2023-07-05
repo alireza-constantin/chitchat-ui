@@ -1,8 +1,8 @@
-import { useState } from "react"
+import {useState } from "react"
 import { SquaresPlusIcon, Bars4Icon } from "@heroicons/react/24/outline"
 import clsx from "clsx"
-import Modal from "../modal"
-import CreateConversation from "../createConversation"
+import Modal from "../shared/modal"
+import CreateConversation from "./CreateConversation"
 import { Conversations } from "./Conversations"
 
 export default function Sidebar() {
@@ -19,8 +19,7 @@ export default function Sidebar() {
                 )}
             >
                 <SidebarButton expanded={expanded} setExpanded={setExpanded} />
-                <Conversations expanded={expanded} />
-
+                    <Conversations expanded={expanded} />
                 <Modal header="Create a New Conversation">
                     <CreateConversation />
                 </Modal>

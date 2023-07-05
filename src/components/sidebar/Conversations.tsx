@@ -1,27 +1,17 @@
 import { useAppDispatch, useAppSelector } from "@/app/hook"
 import { selectAllConversations, fetchUserConversations } from "@/app/slices/conversations"
-import { Recipient } from "@/types"
+import type { AuthUser } from "@/types"
 import { useEffect } from "react"
 import { useRouteLoaderData } from "react-router-dom"
 import { Profile } from "./Profile"
-
-
-function isUserAuthor(userId: number, authorId: number): boolean {
-    return userId === authorId
-}
-
-function getFullName(user: Recipient) {
-    return `${user.firstName} ${user.lastName}`
-}
+import { isUserAuthor, getFullName } from "@/utils/helpers"
 
 export function Conversations({ expanded }: { expanded: boolean }) {
-    const user = useRouteLoaderData("root") as Recipient
+    const user = useRouteLoaderData("root") as AuthUser
 
     const dispatch = useAppDispatch()
 
     const conversations = useAppSelector(selectAllConversations)
-
-    console.log("conversations:", conversations)
 
     useEffect(() => {
         dispatch(fetchUserConversations())
@@ -31,13 +21,13 @@ export function Conversations({ expanded }: { expanded: boolean }) {
         <div className="">
             <ul className="flex flex-col gap-1">
                 {conversations &&
-                    conversations.map(({ id, creator, recipinet }) => (
+                    conversations.map(({ id, creator, recipinet, creatorId }) => (
                         <Profile
                             key={id}
                             id={id}
                             lastMessage="last message"
                             userName={
-                                isUserAuthor(user.id, creator.id)
+                                isUserAuthor(user.id, creatorId)
                                     ? getFullName(recipinet)
                                     : getFullName(creator)
                             }

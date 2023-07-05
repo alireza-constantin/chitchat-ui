@@ -14,3 +14,12 @@ export const registerSchema = z.object({
 
 export type LoginType = z.infer<typeof loginSchema>
 export type RegisterType = z.infer<typeof registerSchema>
+
+export type AuthUser = {
+    createdAt: string,
+    updatedAt: string,
+    email: string,
+    firstName: string,
+    lastName: string,
+    id: number
+}

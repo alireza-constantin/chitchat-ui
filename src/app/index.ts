@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import converstaionsReducer, { conversationsAdapter } from './slices/conversations'
+import messagesReducer from './slices/messages'
 
 export const store = configureStore({
     reducer: {
-        conversations: converstaionsReducer
+        conversations: converstaionsReducer,
+        messages: messagesReducer
     }
 })
 

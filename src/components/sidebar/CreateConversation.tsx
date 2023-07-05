@@ -1,4 +1,4 @@
-import { FormInput } from "./FormInput";
+import { FormInput } from "../shared/FormInput";
 
 export default function CreateConversation(){
     return (

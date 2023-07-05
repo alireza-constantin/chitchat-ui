@@ -1,7 +1,7 @@
 import { type RegisterType, registerSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { type SubmitHandler, useForm } from "react-hook-form"
-import { FormInput } from "../components/FormInput"
+import { FormInput } from "../components/shared/FormInput"
 import { Link } from "react-router-dom"
 import { handleError } from "@/utils/handleResponseError"
 import { AxiosError } from "axios"

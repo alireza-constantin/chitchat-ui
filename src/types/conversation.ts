@@ -1,8 +1,9 @@
-export type Recipient = {
+export type User = {
     firstName: string
     lastName: string
-    id: number
 }
+
+export type UserWithEmail = User & { email: string }
 
 export type Conversation = {
     id: number
@@ -10,8 +11,8 @@ export type Conversation = {
     updatedAt: string
     creatorId: number
     recipientId: number
-    recipinet: Recipient
-    creator: Recipient
+    recipinet: UserWithEmail
+    creator: User
 }
 
 export type Message = {

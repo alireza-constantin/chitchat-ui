@@ -21,7 +21,6 @@ export const conversationsSlice = createSlice({
     },
     extraReducers(builder) {
         builder.addCase(fetchUserConversations.fulfilled, (state, action) => {
-        
             conversationsAdapter.setAll(state, action.payload)
         })
     },
@@ -32,4 +31,6 @@ export const { addConversation } = conversationsSlice.actions
 export default conversationsSlice.reducer
 
 // Selectors
-export const { selectAll: selectAllConversations } = conversationsAdapter.getSelectors<RootState>(state => state.conversations)
+export const { selectAll: selectAllConversations, selectById: selectConversationById } = conversationsAdapter.getSelectors<RootState>(
+    (state) => state.conversations
+)

@@ -1,4 +1,4 @@
-import { FormInput } from "../components/FormInput"
+import { FormInput } from "../components/shared/FormInput"
 import { Link, useNavigate } from "react-router-dom"
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"

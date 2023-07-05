@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ProfilePic } from "../ProfilePic"
+import { ProfilePic } from "../shared/ProfilePic"
 
 type Profile = {
     exp : boolean,
