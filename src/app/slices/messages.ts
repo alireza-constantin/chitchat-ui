@@ -15,7 +15,9 @@ export const messagesSlice = createSlice({
     // `createSlice` will infer the state type from the `initialState` argument
     initialState,
     reducers: {
-        // addConversation: conversationsAdapter.addOne,
+        addConversation: (state, action) => {
+            state.push(action.payload)
+        }
     },
     extraReducers(builder) {
         builder.addCase(fetchMessagesById.fulfilled, (_, action) => {
@@ -24,7 +26,7 @@ export const messagesSlice = createSlice({
     },
 })
 
-// export const {  } = messagesSlice.actions
+export const { addConversation } = messagesSlice.actions
 
 export default messagesSlice.reducer
 

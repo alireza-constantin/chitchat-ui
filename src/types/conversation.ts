@@ -27,7 +27,7 @@ export type Message = {
 
 export type SendMessage = {
     conversationId: number,
-    message: string
+    text: string
 }
 
 export type ConversationWithMessages = Conversation & { messages: Message[] }

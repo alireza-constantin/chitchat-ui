@@ -1,18 +1,47 @@
-import {  useAppSelector } from "@/app/hook"
+import { useAppDispatch, useAppSelector } from "@/app/hook"
 import { selectConversationById } from "@/app/slices/conversations"
-import type { AuthUser } from "@/types"
+import type { AuthUser, Message } from "@/types"
 import { useParams, useRouteLoaderData } from "react-router-dom"
 import { ProfilePic } from "../shared/ProfilePic"
 import ChatMessages from "./ChatMessages"
 import SendMessageInput from "./SendMessageInput"
 import { getFullName, isUserAuthor } from "@/utils/helpers"
-
+import { socket } from "@/utils/socket"
+import { useEffect } from "react"
+import { addConversation } from "@/app/slices/messages"
+import { toast } from "react-hot-toast"
 
 export default function Chat() {
     const params = useParams() as { chatId: string }
     const user = useRouteLoaderData("root") as AuthUser
+    const dispatch = useAppDispatch()
 
     const conversation = useAppSelector((state) => selectConversationById(state, params.chatId))
+
+    useEffect(() => {
+        socket.on("connect", () => console.log("connected"))
+        socket.on("onMessage", (msg: Message) => {
+            console.log(msg, conversation)
+
+            if (params.chatId && msg.conversationId === Number(params.chatId)) {
+                dispatch(addConversation(msg))
+                return
+            }
+            toast.custom(
+                <div className="px-4 py-2 bg-zinc-200 rounded-md w-[210px]">
+                    <h2 className="text-center text-zinc-700 text-lg mb-2 font-semibold">{getFullName(msg.author)}</h2>
+                    <p className="text-gray-500 text-sm">{msg.text}</p>
+                </div>,
+                {
+                    duration: 10000,
+                }
+            )
+        })
+
+        return () => {
+            socket.off("connect")
+        }
+    }, [])
 
     if (!conversation) {
         return <div>something went wrong</div>
@@ -23,18 +52,6 @@ export default function Chat() {
     const recipientFullName = isUserAuthor(user.id, creatorId)
         ? getFullName(recipinet)
         : getFullName(creator)
-
-    // useEffect(() => {
-    //     socket.on('connect', () => console.log('connected'))
-    //     socket.on('onMessage', (msg: Message) => {
-    //         console.log(msg)
-    //         addToMessages(msg)
-    //     })
-
-    //     return () => {
-    //         socket.off('connect')
-    //     }
-    // }, [])    console.log(recipientFullName)
 
     return (
         <div className="w-full max-h-screen overflow-hidden">

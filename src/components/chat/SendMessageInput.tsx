@@ -8,7 +8,7 @@ export default function SendMessageInput({ conversationId, name }: { conversatio
         try {
             await sendMessage({
                 conversationId: Number(conversationId),
-                message: messageInput.value,
+                text: messageInput.value,
             })
         } catch (error) {
             console.log(error)
@@ -17,9 +17,10 @@ export default function SendMessageInput({ conversationId, name }: { conversatio
     }
 
     return (
-        <div className="w-full h-20  p-4 bg-zinc-800">
+        <div className="w-full h-20  py-2 px-4  bg-zinc-800">
             <form onSubmit={sendMessageHandler}>
                 <input
+                    autoComplete="off"
                     name="message"
                     placeholder={`Write to ${name}`}
                     className="
