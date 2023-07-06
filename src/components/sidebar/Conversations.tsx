@@ -18,8 +18,8 @@ export function Conversations({ expanded }: { expanded: boolean }) {
     }, [])
 
     return (
-        <div className="">
-            <ul className="flex flex-col gap-1">
+        <div>
+            <ul className="flex flex-col gap-[2px]">
                 {conversations &&
                     conversations.map(({ id, creator, recipinet, creatorId }) => (
                         <Profile

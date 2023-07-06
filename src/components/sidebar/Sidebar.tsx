@@ -13,7 +13,7 @@ export default function Sidebar() {
             <Backdrop expanded={expanded} setExpanded={setExpanded} />
             <div
                 className={clsx(
-                    "sticky min-h-screen z-20 overflow-y-scroll no-scrollbar border-r-2 bg-zinc-800 border-zinc-700",
+                    "sticky min-h-screen z-20 overflow-y-scroll no-scrollbar border-r-2 bg-primary border-accent",
                     "top-0 bottom-0 duration-200 transition-all",
                     expanded ? "sm:max-w-[280px] w-[280px]" : "left-0 w-[72px] sm:w-[280px]"
                 )}
@@ -36,8 +36,8 @@ type SidebarButtonProps = {
 function SidebarButton({ expanded, setExpanded }: SidebarButtonProps) {
     return (
         <div
-            className="sticky top-0 z-30 border-b-2 border-zinc-700 
-                    flex justify-between items-center p-3 h-16  bg-zinc-900"
+            className="sticky top-0 z-30 border-b-2 border-base-300 
+                    flex justify-between items-center p-3 h-16  bg-base-100"
         >
             {expanded ? (
                 <>

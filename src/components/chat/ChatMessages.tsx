@@ -19,7 +19,7 @@ export default function ChatMessages({ conversationId, authUserId }: ChatMessage
     }, [dispatch, conversationId])
 
     return (
-        <div className="flex-1 px-6 flex flex-col-reverse py-2 overflow-y-auto no-scrollbar">
+        <div className="flex-1 px-6 flex flex-col-reverse bg-primary py-2 overflow-y-auto no-scrollbar">
             {[...messages]
                 .reverse()
                 .map(({ authorId, id, text, createdAt, author }, idx, messages) => {

@@ -47,7 +47,7 @@ export default function Login() {
                 {fields.map((field) => (
                     <FormInput register={register(field)} label={field} key={field} error={errors[field]} />
                 ))}
-                <button type="submit" className="btn btn-primary capitalize h-16 w-full">Login</button>
+                <button type="submit" className="btn bg-indigo-700 hover:bg-indigo-600 rounded-md capitalize h-16 w-full">Login</button>
             </form>
             <p className="text-center text-gray-200 font-semibold  text-xs mt-3">
                 Do not have an account?{" "}

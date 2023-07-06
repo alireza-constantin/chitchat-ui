@@ -8,7 +8,7 @@ type FormInput = {
 
 export const FormInput: React.FC<FormInput> = ({ label, register, error }) => {
     return (
-        <div className="form-control rounded-md px-5 py-3 flex mb-1 w-full justify-center bg-zinc-900">
+        <div className="form-control rounded-md px-5 py-3 flex mb-1 w-full justify-center bg-base-200">
             {label && (
                 <label
                     className="text-sm pb-1 text-gray-400 font-medium capitalize"

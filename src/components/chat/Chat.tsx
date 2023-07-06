@@ -67,7 +67,7 @@ export default function Chat() {
 function ChatHeader({ name }: { name: string }) {
     return (
         <div
-            className="w-full flex items-center bg-zinc-900
+            className="w-full flex items-center bg-base-100
                     flex-start h-[64px] pl-6 gap-4"
         >
             <ProfilePic />

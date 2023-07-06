@@ -5,31 +5,32 @@ export default {
         extend: {
             keyframes: {
                 unhide: {
-                    '0%': {
-                        opacity: '0',
-                        transform: 'translateX(-60px)'
+                    "0%": {
+                        opacity: "0",
+                        transform: "translateX(-60px)",
                     },
-                    '30%': {
-                        opacity: '0'
+                    "30%": {
+                        opacity: "0",
                     },
-                    '100%': {
-                        opacity: '1',
-                        transform: 'translateX(0)'
-                    }
-                }
-            }
+                    "100%": {
+                        opacity: "1",
+                        transform: "translateX(0)",
+                    },
+                },
+            },
         },
     },
     plugins: [require("daisyui")],
     daisyui: {
         themes: [
             {
-                dark: {
-                    ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
-                    "base-100": "#27272a",
+                light: {
+                    ...require("daisyui/src/theming/themes")["[data-theme=black]"],
+                    primary: "#111111",
+                    secondary: "#171818",
+                    accent: "#202222",
                 },
             },
-            
         ],
     },
 }

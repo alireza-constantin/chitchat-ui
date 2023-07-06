@@ -11,7 +11,7 @@ type Profile = {
 
 export function Profile({ exp, lastMessage, userName, id }: Profile) {
     return (
-        <Link to={`/${id}`} className="flex gap-4 items-center bg-zinc-900 py-3 h-16 px-5 justify-start">
+        <Link to={`/${id}`} className="flex gap-4 items-center bg-base-100 py-3 h-16 px-5 justify-start">
             <ProfilePic />
             {exp && (
                 <div className="w-3/4 transition-all duration-1000 animate-[unhide_300ms_ease-in-out_forwards]">

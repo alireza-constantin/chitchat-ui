@@ -38,7 +38,10 @@ export default function Register() {
     
     return (
         <>
-            <form onSubmit={handleSubmit(submitHandler)}  className="mx-auto pt-32  container px-4 lg:w-3/5">
+            <form
+                onSubmit={handleSubmit(submitHandler)}
+                className="mx-auto pt-32  container px-4 lg:w-3/5"
+            >
                 <FormInput label="email" register={register("email")} error={errors["email"]} />
                 <div className="flex flex-col sm:flex-row sm:gap-1 justify-between">
                     <FormInput
@@ -52,8 +55,15 @@ export default function Register() {
                         error={errors["lastName"]}
                     />
                 </div>
-                <FormInput label="password" register={register("password")} error={errors["password"]} />
-                <button type="submit" className="btn btn-primary capitalize h-16 w-full">
+                <FormInput
+                    label="password"
+                    register={register("password")}
+                    error={errors["password"]}
+                />
+                <button
+                    type="submit"
+                    className="btn bg-indigo-700 hover:bg-indigo-600 rounded-md capitalize h-16 w-full"
+                >
                     Create My Account
                 </button>
             </form>

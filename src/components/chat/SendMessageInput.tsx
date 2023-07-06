@@ -17,14 +17,14 @@ export default function SendMessageInput({ conversationId, name }: { conversatio
     }
 
     return (
-        <div className="w-full h-20  py-2 px-4  bg-zinc-800">
+        <div className="w-full  py-3 px-4  bg-primary">
             <form onSubmit={sendMessageHandler}>
                 <input
                     autoComplete="off"
                     name="message"
                     placeholder={`Write to ${name}`}
                     className="
-                bg-zinc-900 w-full placeholder:capitalize focus:outline-none text-gray-200 placeholder:text-zinc-500 px-4 py-3 rounded-md"
+                bg-secondary w-full placeholder:capitalize focus:outline-none text-gray-100 placeholder:text-zinc-400 px-4 py-3 rounded-md"
                 />
             </form>
         </div>
