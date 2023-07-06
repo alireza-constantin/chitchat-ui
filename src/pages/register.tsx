@@ -8,34 +8,37 @@ import { AxiosError } from "axios"
 import toast from "react-hot-toast"
 import { register as signup } from "@/api/auth"
 import { useNavigate } from "react-router-dom"
-
+import { useState } from "react"
 
 export default function Register() {
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
-        const {
-            register,
-            formState: { errors },
-            handleSubmit,
-        } = useForm<RegisterType>({
-            resolver: zodResolver(registerSchema),
-        })
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm<RegisterType>({
+        resolver: zodResolver(registerSchema),
+    })
 
-
-        const submitHandler: SubmitHandler<RegisterType> = async (data) => {
-            try {
-                await signup(data)
-                navigate("/login")
-            } catch (error) {
-                if (error instanceof AxiosError) {
-                    const err = handleError(error)
-                    err && toast.error(err.message)
-                } else {
-                    console.log(error)
-                }
+    const submitHandler: SubmitHandler<RegisterType> = async (data) => {
+        setLoading(true)
+        try {
+            await signup(data)
+            navigate("/login")
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                const err = handleError(error)
+                err && toast.error(err.message)
+            } else {
+                console.log(error)
             }
+        } finally {
+            setLoading(false)
         }
-    
+    }
+
     return (
         <>
             <form
@@ -64,7 +67,11 @@ export default function Register() {
                     type="submit"
                     className="btn bg-indigo-700 hover:bg-indigo-600 rounded-md capitalize h-16 w-full"
                 >
-                    Create My Account
+                    {loading ? (
+                        <div className="loading loading-dots w-[50px]" />
+                    ) : (
+                        <>Create My Acoount</>
+                    )}
                 </button>
             </form>
             <p className="text-center text-gray-200 font-semibold  text-xs mt-3">

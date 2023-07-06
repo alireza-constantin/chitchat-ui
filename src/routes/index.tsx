@@ -3,13 +3,18 @@ import App, { HandleAuthError } from "@/pages/app";
 import Conversation from "@/pages/conversation";
 import Login from "@/pages/login";
 import Register from "@/pages/register";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import axios from "axios";
 
 async function getStatus() {
         const res = await axios.get("http://localhost:3000/api/auth/status", {
             withCredentials: true,
         })
+
+        if(res.status !== 200) {
+            return redirect('/login')
+        }
+
         return res.data   
 }
 
